@@ -52,23 +52,30 @@
         let data = da.json;
         let width = $(window).width();
         let height = $(window).height();
-        let myMap = L.map('mapid').setView([25.0722631, 121.5816963], 16);
-        L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-            maxZoom: 16,
-            attribution: 'Map data: © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-        }).addTo(myMap);
+        let MapMark = L.map('mapid').setView([25.0722631, 121.5816963], 16);
 
+        let layer_1 = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 16,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
+
+        layer_1.addTo(MapMark);
         // L.circleMarker([25.0722631, 121.5816963], {
         //     radius: 10
-        // }).addTo(myMap);
-
+        // }).addTo(MapMark);
 
         const greenIcon = L.icon({
             iconUrl: '../images/marker-icon.png',
             iconSize: [50, 50], // size of the icon
             // popupAnchor: [0, -10] // point from which the popup should open relative to the iconAnchor
         });
-        // L.marker(data.features[i].geometry.coordinates, { icon: greenIcon }).addTo(myMap);
+        // L.marker([25.0722631, 121.5816963], {
+        //     icon: greenIcon
+        // }).addTo(MapMark);
+
+        L.marker([25.0722631, 121.5816963], {
+            icon: greenIcon
+        }).addTo(MapMark);
 
 
 
@@ -76,34 +83,22 @@
 
 
         for (let i in data.features) {
-
-            if (i > 20) {
-                continue;
-            }
             let locateDataInfo = {};
-            // locateDataInfo.name = data.features[i].properties.name;
-            locateDataInfo.local = data.features[i].geometry.coordinates;
+            locateDataInfo.name = data.features[i].properties.name;
+            locateDataInfo.localX = data.features[i].geometry.coordinates[0];
+            locateDataInfo.localY = data.features[i].geometry.coordinates[1];
             locateData.push(locateDataInfo);
 
         }
-        cslog(locateData);
-        // L.marker(data.features[i].geometry.coordinates, { icon: greenIcon }).addTo(myMap);
-        // console.log(locateData);
-        // cslog(greenIcon);
-        locateData.forEach(item => {
-            L.marker(item.local, {
-                    // title: item.name,
-                    icon: greenIcon
-                })
-                .addTo(myMap)
-                // .bindPopup(item.name);
-        });
 
-        // L.marker([locateData[0].locate[0], locateData[0].locate[1]], { icon: greenIcon }).addTo(myMap);
-        // L.marker(locateData[i].locate, { icon: greenIcon }).addTo(myMap);
+        let markers = new L.MarkerClusterGroup();
+        for (let i in locateData) {
+            markers.addLayer(L.marker([locateData[i].localX, locateData[i].localY], {
+                icon: greenIcon
+            }));
 
-        // for (let i in locateData) {
-        //     // L.marker(locateData[i].locate, { icon: greenIcon }).addTo(myMap);
-        //     cslog(locateData[i].locate);
-        // }
+        }
+
+        MapMark.addLayer(markers);
+
     }
