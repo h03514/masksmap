@@ -48,57 +48,32 @@
         });
     }
 
+
     function masksInfo(da) {
         let data = da.json;
-        let width = $(window).width();
-        let height = $(window).height();
-        let MapMark = L.map('mapid').setView([25.0722631, 121.5816963], 16);
 
-        let layer_1 = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 16,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        });
+        let maskMap = L.map('mapid').setView([25.0722631, 121.5816963], 16);
 
-        layer_1.addTo(MapMark);
-        // L.circleMarker([25.0722631, 121.5816963], {
-        //     radius: 10
-        // }).addTo(MapMark);
-
-        const greenIcon = L.icon({
-            iconUrl: '../images/marker-icon.png',
-            iconSize: [50, 50], // size of the icon
-            // popupAnchor: [0, -10] // point from which the popup should open relative to the iconAnchor
-        });
-        // L.marker([25.0722631, 121.5816963], {
-        //     icon: greenIcon
-        // }).addTo(MapMark);
-
-        L.marker([25.0722631, 121.5816963], {
-            icon: greenIcon
-        }).addTo(MapMark);
-
-
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(maskMap);
 
         let locateData = [];
-
-
         for (let i in data.features) {
             let locateDataInfo = {};
             locateDataInfo.name = data.features[i].properties.name;
-            locateDataInfo.localX = data.features[i].geometry.coordinates[0];
-            locateDataInfo.localY = data.features[i].geometry.coordinates[1];
+            locateDataInfo.mask_adult = data.features[i].properties.mask_adult;
+            locateDataInfo.mask_child = data.features[i].properties.mask_child;
+            locateDataInfo.localY = data.features[i].geometry.coordinates[0];
+            locateDataInfo.localX = data.features[i].geometry.coordinates[1];
             locateData.push(locateDataInfo);
-
         }
 
-        let markers = new L.MarkerClusterGroup();
-        for (let i in locateData) {
-            markers.addLayer(L.marker([locateData[i].localX, locateData[i].localY], {
-                icon: greenIcon
-            }));
+        const markers = new L.MarkerClusterGroup();
+        locateData.forEach(item => {
+            markers.addLayer(L.marker([item.localX, item.localY]).bindPopup(`<ul><li>${item.name}</li><li>成人口罩: ${item.mask_adult}</li><li>兒童口罩: ${item.mask_child}</li></ul>`));
 
-        }
-
-        MapMark.addLayer(markers);
+        });
+        maskMap.addLayer(markers);
 
     }
