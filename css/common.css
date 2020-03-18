@@ -99,8 +99,9 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-    font-family: Arial, helvetica, "Times New Roman", Georgia, Serif, "Microsoft JhengHei";
+h6,
+div {
+    font-family: Arial, "Microsoft JhengHei";
     font-size: 16px;
 }
 

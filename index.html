@@ -9,6 +9,7 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css' />
     <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"></link>
     <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"></link>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -19,6 +20,16 @@
 
 <body>
     <div id="mapid" style="width: 100%;"></div>
+    <div id="nameText" class="">
+        <div class="form-group mx-sm-3 mb-2 form-inline">
+            <h3>請輸入身分證最後一碼</h3>
+            <div>
+                <input type="text" class="form-control mr-2" id="inputText" maxlength="1">
+            </div>
+            <button type="submit" id="checkIdBtn" class="btn btn-primary">確認</button>
+        </div>
+    </div>
+
     <script src="js/main.js"></script>
 </body>
 
