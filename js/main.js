@@ -30,6 +30,10 @@ $(document).ready(function() {
             html += '<div class="alertText">你今天<span><strong>不可以</strong></span>買口罩唷</div>';
             $('#nameText').append(html);
         }
+
+        setTimeout(() => {
+            $('.alertText').remove();
+        }, 3500);
     });
 
 
