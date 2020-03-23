@@ -60,20 +60,38 @@
 
         let locateData = [];
         for (let i in data.features) {
-            let locateDataInfo = {};
-            locateDataInfo.name = data.features[i].properties.name;
-            locateDataInfo.mask_adult = data.features[i].properties.mask_adult;
-            locateDataInfo.mask_child = data.features[i].properties.mask_child;
-            locateDataInfo.localY = data.features[i].geometry.coordinates[0];
-            locateDataInfo.localX = data.features[i].geometry.coordinates[1];
-            locateData.push(locateDataInfo);
+            if (data.features[i].properties.mask_adult > 0 || data.features[i].properties.mask_child > 0) {
+                let locateDataInfo = {};
+                locateDataInfo.id = data.features[i].properties.id;
+                locateDataInfo.name = data.features[i].properties.name;
+                locateDataInfo.mask_adult = data.features[i].properties.mask_adult;
+                locateDataInfo.mask_child = data.features[i].properties.mask_child;
+                locateDataInfo.localY = data.features[i].geometry.coordinates[0];
+                locateDataInfo.localX = data.features[i].geometry.coordinates[1];
+                locateDataInfo.tel = data.features[i].properties.phone;
+                locateDataInfo.addr = data.features[i].properties.address;
+                locateDataInfo.note = data.features[i].properties.note;
+
+                locateData.push(locateDataInfo);
+            }
         }
 
         const markers = new L.MarkerClusterGroup();
-        locateData.forEach(item => {
-            markers.addLayer(L.marker([item.localX, item.localY]).bindPopup(`<ul><li>${item.name}</li><li>成人口罩: ${item.mask_adult}</li><li>兒童口罩: ${item.mask_child}</li></ul>`));
 
+        locateData.forEach(item => {
+            let adult = item.mask_adult;
+            let child = item.mask_child;
+            if (item.mask_adult == 0) {
+                adult = '已完售';
+            }
+            if (item.mask_child == 0) {
+                child = '已完售';
+            }
+            markers.addLayer(L.marker([item.localX, item.localY]).bindPopup(`<div class="pharmacy"><li class="pharmacyName">${item.name}</li></div><div id="pharmacyInfo"><div class="addr"><span>地址: </span>${item.addr}</div><div class="note"> <span>備註: </span>${item.note}</div><div class="Tel"><span>電話: </span>${item.tel}</div></div><div class="mask row"><div class="col-xs-6 label adult">成人口罩: <span>${adult}</span></div><div class="col-xs-6 label child">兒童口罩: <span>${child}</span></div></div>`));
         });
         maskMap.addLayer(markers);
+
+
+
 
     }

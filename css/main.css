@@ -50,4 +50,31 @@ body {
 #nameText .alertText span {
   color: red;
 }
+
+.pharmacy .pharmacyName {
+  font-weight: 1000;
+  font-size: 1.35rem;
+}
+
+.mask .label {
+  width: 50%;
+  text-align: center;
+  padding: 15px 0;
+  margin: 5px 0;
+  background-color: #ccc;
+  font-weight: 1000;
+}
+
+.mask .label:first-child {
+  border-right: 1px solid #000;
+  border-radius: 5px 0 0 5px;
+}
+
+.mask .label:last-child {
+  border-radius: 0px 5px 5px 0px;
+}
+
+#pharmacyInfo span {
+  font-weight: 1000;
+}
 /*# sourceMappingURL=main.css.map */
