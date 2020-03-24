@@ -20,15 +20,29 @@ $(document).ready(function() {
             html += '<div class="alertText">今天大家都可以買口罩喔!!</div>';
             $('#nameText').append(html);
         }
-        if ($('#inputText').val() % 2 != 0) {
-            html = '';
-            html += '<div class="alertText">你今天<span><strong>可以</strong></span>買口罩唷</div>';
-            $('#nameText').append(html);
+
+        if (date.getDay() == 1 || date.getDay() == 3 || date.getDay() == 5) {
+            if ($('#inputText').val() % 2 != 0) {
+                html = '';
+                html += '<div class="alertText">你今天<span><strong>可以</strong></span>買口罩唷</div>';
+                $('#nameText').append(html);
+            } else {
+                html = '';
+                html += '<div class="alertText">你今天<span><strong>不可以</strong></span>買口罩唷</div>';
+                $('#nameText').append(html);
+            }
         }
-        if ($('#inputText').val() % 2 == 0) {
-            html = '';
-            html += '<div class="alertText">你今天<span><strong>不可以</strong></span>買口罩唷</div>';
-            $('#nameText').append(html);
+
+        if (date.getDay() == 2 || date.getDay() == 4 || date.getDay() == 6) {
+            if ($('#inputText').val() % 2 == 0) {
+                html = '';
+                html += '<div class="alertText">你今天<span><strong>可以</strong></span>買口罩唷</div>';
+                $('#nameText').append(html);
+            } else {
+                html = '';
+                html += '<div class="alertText">你今天<span><strong>不可以</strong></span>買口罩唷</div>';
+                $('#nameText').append(html);
+            }
         }
 
         setTimeout(() => {

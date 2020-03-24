@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Masks Map</title>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css' />
-    <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"></link>
-    <!-- <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"></link> -->
+    <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+    <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/main.css">
@@ -24,7 +24,7 @@
         <div class="form-group mx-sm-3 mb-2 form-inline">
             <h3>請輸入身分證最後一碼</h3>
             <div>
-                <input type="text" class="form-control mr-2" id="inputText" maxlength="1">
+                <input type="text" class="form-control mr-2" id="inputText" maxlength="1" onkeyup="value=value.replace(/[^\d]/g,'') ">
             </div>
             <button type="submit" id="checkIdBtn" class="btn btn-primary">確認</button>
         </div>
